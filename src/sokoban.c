@@ -8,11 +8,12 @@
 #include <include/lib_sokoban.h>
 #include <include/obstacles.h>
 #include <include/utils.h>
+#include <include/sokoban.h>
 
 void print_map(char **map_content)
 {   int i = 0;
 
-    while(map_content[i] != '\0') {
+    while (map_content[i] != '\0') {
         my_putstr(map_content[i]);
         my_putchar('\n');
         i++;
@@ -20,23 +21,21 @@ void print_map(char **map_content)
     return;
 }
 
-#include <stdio.h>
 char **move_character(char **map_content, char *key, int l, int c)
 {
     if ((*key == 'Z' || *key == 'z') && !check_wall(map_content, l-1, c)) {
-        if (check_box(map_content, l-1, c) && !check_wall(map_content, l-3, c)) {
+        if (check_box(map_content, l-1, c) && !check_wall(map_content, l-3, c) && l > 2) {
             map_content[l-2][c] = 'X';
             map_content[l-1][c] = 'P';
-            printf("here\n");
-        } else if (!check_wall(map_content, l-2, c)){
-                map_content[l-2][c] = 'X';
+        } else if (check_wall(map_content, l-2, c)) {
                 map_content[l-1][c] = 'P';
-                printf("found wall at l-2\n");
-                printf("%d\n", l-2);
-        } else if (l-2 == 1){
+        } else if (l == 2 && !check_wall(map_content, l-2, c)) {
             return map_content;
+        } else if (l == 2 && !check_wall(map_content, l-2, c)) {
+            return map_content;
+        } else {
+            map_content[l-1][c] = 'P';
         }
-        //map_content[l-1][c] = 'P';
     } else if ((*key == 'S'|| *key == 's') && !check_wall(map_content, l+1, c)) {
         map_content[l+1][c] = 'P';
     } else if ((*key == 'Q' || *key == 'q') && !check_wall(map_content, l, c-1)) {
@@ -56,7 +55,7 @@ char **change_character_state(char **map_content, char *key)
     int j = 0;
     int line_len;
 
-    while(map_content[i] != '\0') {
+    while (map_content[i] != '\0') {
         line_len = my_strlen(map_content[i]);
         for (j = 0; j <= line_len; ++j) {
             if (map_content[i][j] == 'P') {

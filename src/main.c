@@ -18,7 +18,7 @@ void usage(void)
 }
 
 int main(int argc, char **argv)
-{   
+{
     char **map_content = NULL;
     char *map;
     char *input;
@@ -27,10 +27,11 @@ int main(int argc, char **argv)
         usage();
         return -1;
     }
+
     map = argv[1];
     map_content = allocate_map(map);
-    while(1) {
-//        my_putstr("\033c");
+    while (1) {
+        my_putstr("\033c");
         print_map(map_content);
         my_putstr("Input: ");
         input = read_line();
