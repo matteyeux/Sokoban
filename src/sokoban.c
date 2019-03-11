@@ -13,7 +13,7 @@
 void print_map(char **map_content)
 {   int i = 0;
 
-    while (map_content[i] != '\0') {
+    while (*map_content[i] != '\0') {
         my_putstr(map_content[i]);
         my_putchar('\n');
         i++;
@@ -55,7 +55,7 @@ char **change_character_state(char **map_content, char *key)
     int j = 0;
     int line_len;
 
-    while (map_content[i] != '\0') {
+    while (*map_content[i] != '\0') {
         line_len = my_strlen(map_content[i]);
         for (j = 0; j <= line_len; ++j) {
             if (map_content[i][j] == 'P') {
